@@ -4,3 +4,5 @@ I have plans to make it a really, really lightweight web browser, designed only 
 With my script I aim to give you a quick way to find an answer for an easy question - think tuxi, but more browser - like.
 
 HOWEVER. In it's current state the script is almost usless, since it fetches only the search results, URLs and short descriptions. I'm going to make improvements in the future.
+
+I think I'll definatelly add wiby.me support at some point, since it's very easy to scrape and the sites there can be opened in terminal easily, since they are not that complicated.
