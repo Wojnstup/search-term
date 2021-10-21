@@ -48,7 +48,7 @@ do
 	## Check wheter or not to put URL after previous if statement's output
 	if (( $index % 2 == 1 ))
 	then
-		echo -n " -  "
+		echo -n " - "
 		head=$( echo "$links" | sed -n $(( (index + 1) / 2 ))\p )
 		echo $'\e[0;34m'$head$'\e[0m'
 	else
@@ -58,4 +58,43 @@ do
 	echo ""
 	index=$(( index + 1 ))
 done
+
+######## THE WEBSITE VIEWING PART ######## 
+echo ""
+echo ""
+read -p "Choose the website you want to visit: " website
+url=$( echo "$links" | sed -n $website\p  )
+
+page=$( curl $url )
+
+#hrefs=$( echo "$page" | grep "href=" | awk -F"href=\"" '{print $0}' )
+
+## Here I gave up trying to do stuf with awk or sed and opted for pup instead
+# hrefs=$( echo $page | pup 'a attr{href}' )
+
+hrefs=""
+for link in $( echo $page | pup 'a attr{href}' )
+do
+	if [ ${link:0:1} = "." ]
+	then
+		hrefs=$( echo "$hrefs""\n""${link/"./"/"$url"}" )
+	elif [ ${link:0:1} = "/" ]
+	then
+		hrefs=$( echo "$hrefs""\n""${link/\//"$url"}" )
+
+	else
+		hrefs=$( echo "$hrefs""\n""$link" )
+	fi
+
+done
+
+
+page=$( echo $page | pup 'body text{}' )
+
+echo -e "$page" | less
+
+
+
+
+
 
