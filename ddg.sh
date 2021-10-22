@@ -97,7 +97,7 @@ then
 	index=1
 	for title in $titles
 	do
-		echo -n $'\e[0;32m'"$title"$'\e[0m'"   -  " 
+		echo -n $'\e[0;35m'"$title"$'\e[0m'"   -  " 
 		link=$( echo "$links" | sed -n $index\p )
 		echo $'\e[0;34m'"$link"$'\e[0m' 
 		echo "$descs" | sed -n $index\p
