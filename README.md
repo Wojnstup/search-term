@@ -10,6 +10,7 @@ HOWEVER. In it's current state the script is almost usless, since it fetches onl
   </h2>
 <ul>
   <li>curl</li>
+  <li>less</li>
   <li>pup (you can get it from AUR)</li>
   <li>fzf</li>
   </ul>
