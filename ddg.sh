@@ -114,6 +114,12 @@ echo ""
 read -p "Choose the website you want to visit: " website
 url=$( echo "$links" | sed -n $website\p  )
 
+if [[ $( echo -e "Surf\nTerminal" | fzf --prompt "How to open the site?" ) == "Surf" ]]
+then
+	surf "$url"
+	exit
+fi
+
 page=$( curl "$url" )
 
 ## Here I gave up trying to do stuf with awk or sed and opted for pup instead
@@ -121,13 +127,17 @@ echo "$url"
 
 if [[ "$url" == *"wikipedia"* ]]
 then
-	page=$(echo $( echo "$page" | pup 'h1#firstHeading text{}' ) "\n"  $( echo "$page" | pup 'p text{}' ))
+    page=$(echo $( echo "$page" | pup 'h1#firstHeading text{}' ) "\n"  $( echo "$page" | pup 'p text{}' ))
+elif [[ "$url" == *"stackoverflow"* ]]
+then
+    title=$( echo "$page" | pup 'h1 text{}')
+    page="$( echo -e "$title \n" "$( echo "$page" | pup 'div[class="s-prose js-post-body"]' | pup 'p text{}')")"
 else
 	page=$( echo "$page" | pup 'body text{}' )
 fi
 
 
-## Configure hrefs
+## Configure hrefs (not currently used, have plans for future)
 hrefs=""
 for link in $( echo $page | pup 'a attr{href}' )
 do
